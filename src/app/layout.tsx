@@ -8,22 +8,12 @@ import { PrismicNextLink, PrismicPreview } from "@prismicio/next";
 import { createClient, repositoryName } from "@/prismicio";
 import { Bounded } from "@/components/Bounded";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <head>
-        <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rationale&display=swap');
-        </style>
-      </head>
+    <html lang="en">
+      
       <body className="overflow-x-hidden antialiased">
         <Header />
         {children}
