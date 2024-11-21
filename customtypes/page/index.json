@@ -35,7 +35,13 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "image_section": {
+            "section": {
+              "type": "SharedSlice"
+            },
+            "background_image": {
+              "type": "SharedSlice"
+            },
+            "model3_d": {
               "type": "SharedSlice"
             }
           }

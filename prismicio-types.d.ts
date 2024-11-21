@@ -61,7 +61,10 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
-type PageDocumentDataSlicesSlice = ImageSectionSlice;
+type PageDocumentDataSlicesSlice =
+  | SectionSlice
+  | BackgroundImageSlice
+  | Model3DSlice;
 
 /**
  * Content for Page documents
@@ -369,6 +372,207 @@ export type ImageSectionSlice = prismic.SharedSlice<
   ImageSectionSliceVariation
 >;
 
+/**
+ * Primary content in *Model3D → Default → Primary*
+ */
+export interface Model3DSliceDefaultPrimary {
+  /**
+   * Model3D field in *Model3D → Default → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: model3_d.default.primary.model3d
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  model3d: prismic.LinkToMediaField;
+}
+
+/**
+ * Default variation for Model3D Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Model3DSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<Model3DSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Model3D*
+ */
+type Model3DSliceVariation = Model3DSliceDefault;
+
+/**
+ * Model3D Shared Slice
+ *
+ * - **API ID**: `model3_d`
+ * - **Description**: Model3D
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Model3DSlice = prismic.SharedSlice<
+  "model3_d",
+  Model3DSliceVariation
+>;
+
+/**
+ * Item in *Section → Default → Primary → Content*
+ */
+export interface SectionSliceDefaultPrimaryContentItem {
+  /**
+   * Image field in *Section → Default → Primary → Content*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section.default.primary.content[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Text field in *Section → Default → Primary → Content*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: lorem ipsum dolor sit amet blablabla
+   * - **API ID Path**: section.default.primary.content[].text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Button field in *Section → Default → Primary → Content*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: section.default.primary.content[].button
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  button: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *Section → Default → Primary*
+ */
+export interface SectionSliceDefaultPrimary {
+  /**
+   * Backdrop field in *Section → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section.default.primary.backdrop
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  backdrop: prismic.ImageField<never>;
+
+  /**
+   * Title field in *Section → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Content field in *Section → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section.default.primary.content[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  content: prismic.GroupField<Simplify<SectionSliceDefaultPrimaryContentItem>>;
+
+  /**
+   * Model3D field in *Section → Default → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section.default.primary.model3d
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  model3d: prismic.LinkToMediaField;
+}
+
+/**
+ * Default variation for Section Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SectionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SectionSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Section*
+ */
+type SectionSliceVariation = SectionSliceDefault;
+
+/**
+ * Section Shared Slice
+ *
+ * - **API ID**: `section`
+ * - **Description**: Section
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SectionSlice = prismic.SharedSlice<
+  "section",
+  SectionSliceVariation
+>;
+
+/**
+ * Primary content in *SubTitle → Default → Primary*
+ */
+export interface SubTitleSliceDefaultPrimary {
+  /**
+   * subTitle field in *SubTitle → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sub_title.default.primary.subtitle
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  subtitle: prismic.RichTextField;
+}
+
+/**
+ * Default variation for SubTitle Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SubTitleSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SubTitleSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *SubTitle*
+ */
+type SubTitleSliceVariation = SubTitleSliceDefault;
+
+/**
+ * SubTitle Shared Slice
+ *
+ * - **API ID**: `sub_title`
+ * - **Description**: SubTitle
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SubTitleSlice = prismic.SharedSlice<
+  "sub_title",
+  SubTitleSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -410,6 +614,19 @@ declare module "@prismicio/client" {
       ImageSectionSliceDefaultPrimary,
       ImageSectionSliceVariation,
       ImageSectionSliceDefault,
+      Model3DSlice,
+      Model3DSliceDefaultPrimary,
+      Model3DSliceVariation,
+      Model3DSliceDefault,
+      SectionSlice,
+      SectionSliceDefaultPrimaryContentItem,
+      SectionSliceDefaultPrimary,
+      SectionSliceVariation,
+      SectionSliceDefault,
+      SubTitleSlice,
+      SubTitleSliceDefaultPrimary,
+      SubTitleSliceVariation,
+      SubTitleSliceDefault,
     };
   }
 }

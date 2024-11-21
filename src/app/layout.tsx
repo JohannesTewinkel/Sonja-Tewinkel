@@ -19,10 +19,16 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rationale&display=swap');
+        </style>
+      </head>
       <body className="overflow-x-hidden antialiased">
         <Header />
         {children}
         <PrismicPreview repositoryName={repositoryName} />
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" async ></script> 
       </body>
     </html>
   );
